@@ -15,10 +15,12 @@ There are two independent ways of using/install this algorithm:
 
 The most simple manner is to install The Fourier Shell Occupancy algorithm via pip.
 
-Download the Fourier Occupancy Shell GUI an dall its dependencies
-1) `pip install fouriershell`
-Install Xmipp-light with the Fourier Occupancy Shell algorithm using
-2) `source install.sh`
+1) Download the Fourier Occupancy Shell GUI an dall its dependencies
+ `pip install fouriershell`
+2) Install Xmipp-light with the Fourier Occupancy Shell algorithm using
+`source install.sh`
+3) Execute the software
+`FourierShell`
 
 If for any reason this installation fails you can also do a manual installation (however, you will need to install all required dependencies manually, following next steps
 
@@ -27,8 +29,14 @@ If for any reason this installation fails you can also do a manual installation 
 2) Download Xmipp-light
 `https://github.com/Vilax/xmipp-light.git`
 3) Compile Xmipp-light
-`chmod +x xmipp`
-`./xmipp`
+`chmod +x xmipp; ./xmipp`
+4) Create a conda enviroment an install there all dependencies
+`conda create -n cryolo -c anaconda python=3.6 pyqt=5 cudnn=7.1.2 numpy==1.14.5 cython wxPython==4.0.4 intel-openmp==2019.4`
+5) Execute the software
+`FourierShell`
+
+
+
 
 Once the Fourier Occupancy Shell is installed you will be able to run it by executing the file
 `FourierOccupancyShell`
