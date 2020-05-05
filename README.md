@@ -16,8 +16,8 @@ There are two independent ways of using/install this algorithm:
 The most simple manner is to install The Fourier Shell Occupancy algorithm via pip.
 
 1) Download the Fourier Occupancy Shell GUI an dall its dependencies
- `pip install fouriershell`
-2) Install Xmipp-light with the Fourier Occupancy Shell algorithm using
+ `https://github.com/Vilax/FourierOccupancyShell.git`
+2) Install Xmipp-light with the Fourier Occupancy Shell algorithm and preparing the conda enviroment using (Anaconda or miniconda is required (Anaconda installation info [here](https://docs.anaconda.com/anaconda/install/))
 `source install.sh`
 3) Execute the software
 `FourierShell`
@@ -30,17 +30,14 @@ If for any reason this installation fails you can also do a manual installation 
 `https://github.com/Vilax/xmipp-light.git`
 3) Compile Xmipp-light
 `chmod +x xmipp; ./xmipp`
-4) Create a conda enviroment an install there all dependencies
-`conda create -n FourierShell -c matplotlib=3.1.3 pyqt=5 numpy==1.14.5`
-5) Execute the software
+4) Create a conda enviroment
+`conda create -n FourierShell`
+5) Activate conda enviroment
+`conda activate FourierShell`
+6) Install dependencies in the conda enviroment
+`conda install -c anaconda pyqt` and `conda install -c anaconda matplotlib` 
+7) Execute the software
 `FourierShell`
-
-
-
-
-Once the Fourier Occupancy Shell is installed you will be able to run it by executing the file
-`FourierOccupancyShell`
-
 
 ## Using in Scipion
 
