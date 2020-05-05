@@ -31,7 +31,7 @@ If for any reason this installation fails you can also do a manual installation 
 3) Compile Xmipp-light
 `chmod +x xmipp; ./xmipp`
 4) Create a conda enviroment an install there all dependencies
-`conda create -n cryolo -c anaconda python=3.6 pyqt=5 cudnn=7.1.2 numpy==1.14.5 cython wxPython==4.0.4 intel-openmp==2019.4`
+`conda create -n FourierShell -c matplotlib=3.1.3 pyqt=5 numpy==1.14.5`
 5) Execute the software
 `FourierShell`
 
