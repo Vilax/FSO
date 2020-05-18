@@ -22,32 +22,16 @@ Fourier Shell Occupancy uses a conda enviroment to do not interfer with the syst
     If conda command does not work, a solution is to export the path `export PATH=~/anaconda3/bin:$PATH` or even better to create an alias in your .bashrc file.
 1.3) Activate the conda enviroment
 `conda activate FourierShell`
-Note that every time you will want to use the Fourier Shell Occupancy, the command `conda activate FourierShell` will be required.
+Note that every time you will want to use the Fourier Shell Occupancy, the command `conda activate FourierShell` will be required
 
-
-1) Download the Fourier Occupancy Shell GUI an dall its dependencies
+2) Download the Fourier Occupancy Shell GUI an dall its dependencies
  `https://github.com/Vilax/FourierOccupancyShell.git`
-2) Install Xmipp-light with the Fourier Occupancy Shell algorithm and preparing the conda enviroment using (Anaconda or miniconda is required (Anaconda installation info [here](https://docs.anaconda.com/anaconda/install/))
+3) Run the installer script
 `source install.sh`
 3) Execute the software
-`FourierShell`
+`python FourierShell.py`
 
-If for any reason this installation fails you can also do a manual installation (however, you will need to install all required dependencies manually, following next steps
-
-1) Download the FourierShell Occupancy Graphical Interface
-`git clone https://github.com/Vilax/FourierOccupancyShell.git`
-2) Download Xmipp-light
-`https://github.com/Vilax/xmipp-light.git`
-3) Compile Xmipp-light
-`chmod +x xmipp; ./xmipp`
-4) Create a conda enviroment
-`conda create -n FourierShell`
-5) Activate conda enviroment
-`conda activate FourierShell`
-6) Install dependencies in the conda enviroment
-`conda install -c anaconda pyqt` and `conda install -c anaconda matplotlib` 
-7) Execute the software
-`FourierShell`
+If for any reason this installer of step 2 fails. Open the file installer.sh and launch the commands one by one.
 
 ## Using in Scipion
 
