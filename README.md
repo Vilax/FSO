@@ -28,11 +28,11 @@ Note that every time you will want to use the Fourier Shell Occupancy, the comma
 `conda install -c anaconda python=3.6 pyqt=5` and `conda install -c conda-forge matplotlib`
 
 2) Download the Fourier Occupancy Shell GUI an dall its dependencies
- `https://github.com/Vilax/FourierOccupancyShell.git`
+ `git clone https://github.com/Vilax/FourierOccupancyShell.git`
 3) Run the installer script
 `source install.sh`
 3) Execute the software
-`python FourierShell.py`
+`python main.py`
 
 If for any reason this installer of step 2 fails. Open the file installer.sh and launch the commands one by one.
 
