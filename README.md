@@ -33,11 +33,11 @@ Note that every time you will want to use the Fourier Shell Occupancy, the comma
 
 If for any reason this installer of step 2 fails. Open the file installer.sh and launch the commands one by one.
 
-## Using in Scipion
+## Using in Scipion (still under development)
 
 Before use the algoritm, Scipion needs to be installed. To do that see, Scipion installation instructions in the [Scipion Official web site](http://scipion.i2pc.es/).
 
 Once Scipipion have been installed, the Xmipp package is required, but it can be easily installed in the [plugin manager](https://scipion-em.github.io/docs/docs/user/plugin-manager.html#plugin-manager) inside Scipion.
-Then, the algorithm will be available to be used in Scipion. You can find the algorithm searching by `Ctrl+F`, or in the left lateral panel, in `3D->Analysis->Resolution->Xmipp - Forioer Occupancy Shell`
+Then, the algorithm will be available to be used in Scipion. You can find the algorithm searching by `Ctrl+F`, or in the left lateral panel, in `3D->Analysis->Resolution->Xmipp - Forioer Shell Occupancy`
 
 
