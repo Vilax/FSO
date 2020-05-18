@@ -109,9 +109,111 @@ class PlotAgainstResolution(QtWidgets.QMainWindow):
         self.show()
         
 
+# class PlotAngular(QtWidgets.QMainWindow):
+
+#     def __init__(self, mdFile, labelRadial, labelAzimutal, labelCounts, xlabel, ylabel, title, preprocess):
+#         super(PlotAngular, self).__init__()
+
+#         self.mdFile = mdFile
+#         self.labelRadial = labelRadial
+#         self.labelAzimutal = labelAzimutal
+#         self.labelCounts = labelCounts
+#         self.xlabel = xlabel
+#         self.ylabel = ylabel
+#         self.title = title
+#         self.preprocess = preprocess
+
+#         sc = MplCanvas(self, width=5, height=4, dpi=100, polar=True)
+        
+#         mdDict = readMetaData(self.mdFile)
+
+#         radius = mdDict[labelRadial]
+#         azimuth = mdDict[labelAzimutal]
+#         counts = mdDict[labelCounts]
+        
+#         # Detect the coordinate system
+#         rmin = np.amin(azimuth)
+#         rmax = np.amax(azimuth)
+#         tmin = np.amin(radius)
+#         tmax = np.amax(radius)
+    
+#         if (rmin < -90) or (tmax < 90):
+#             print('The angular assigment does not follow the criterion of'
+#                   'rot in [0,360) and tilt in [0,90]. The angles will be '
+#                   'be converted into this criterion.')
+#             print('The detected criterion consider a rot in [-180,180) and '
+#                   ' a tilt in [0,90]. The angles will be converted into '
+#                   ' rot in [0,360) and tilt in [0,90]. If the result is not'
+#                   ' correct please check that the input set of particles has'
+#                   ' the angles following this criterion rot in [0,360) and '
+#                   ' tilt in [0,90]')
+#         idx = azimuth < 0
+#         azimuth[idx] = azimuth[idx] + 360
+
+#         if ((rmin < 0) and (rmin > -90)) or (tmax > 90):
+#             print('The angular assigment does not follow the criterion of'
+#                   'rot in [0,360) and tilt in [0,90]. The angles will be '
+#                   'be converted into this criterion.')
+#             print('The detected criterion consider a rot in [-90,90) and '
+#                   ' a tilt in [0,180]. The angles will be converted into '
+#                   ' rot in [0,360) and tilt in [0,90]. If the result is not'
+#                   ' correct please check that the input set of particles has'
+#                   ' the angles following this criterion rot in [0,360) and '
+#                   ' tilt in [0,90]')
+        
+#         for k in np.arange(0, len(azimuth)):
+#             if (azimuth[k] < 0) and (azimuth[k] <= 90):
+#                 azimuth[k] = azimuth[k] + 360
+#             else:
+#                 if (azimuth[k] < 0) and (azimuth[k] > 90):
+#                     azimuth[k] = azimuth[k] + 180
+#                     radius[k] = 180 - radius[k]
+#                 else:
+#                     if (azimuth[k] >= 0) and (radius[k] > 90):
+#                         azimuth[k] = azimuth[k] + 180;
+#                         radius[k] = 180 - radius[k];
+    
+#         # define binning
+#         azimuths = np.radians(np.linspace(0, 360, 360))
+#         zeniths = np.arange(0, 91, 1)
+    
+#         r, theta = np.meshgrid(zeniths, azimuths)
+    
+#         values = np.zeros((len(azimuths), len(zeniths)))
+        
+#         if self.preprocess is False:
+#             for i in np.arange(0, len(azimuth)):
+#                 values[int(azimuth[i]), int(radius[i])] = counts[i]
+#         else:
+#             for i in np.arange(0, len(azimuth)):
+#                 values[int(azimuth[i]), int(radius[i])] += 1
+                
+#         # ------ Plot ------
+#         pc = sc.axes.contourf(theta, r, values, np.arange(0, values.max(), .1))
+    
+#         sc.fig.colorbar(pc)
+
+
+#         sc.axes.set_title(self.title)
+
+#         # Create toolbar, passing canvas as first parament, parent (self, the MainWindow) as second.
+#         toolbar = NavigationToolbar(sc, self)
+
+#         layout = QtWidgets.QVBoxLayout()
+#         layout.addWidget(toolbar)
+#         layout.addWidget(sc)
+
+#         # Create a placeholder widget to hold our toolbar and canvas.
+#         widget = QtWidgets.QWidget()
+#         widget.setLayout(layout)
+#         self.setCentralWidget(widget)
+
+#         self.show()
+
+
 class PlotAngular(QtWidgets.QMainWindow):
 
-    def __init__(self, mdFile, labelRadial, labelAzimutal, labelCounts, xlabel, ylabel, title, preprocess):
+    def __init__(self, mdFile, labelRadial, labelAzimutal, labelCounts, xlabel, ylabel, title):
         super(PlotAngular, self).__init__()
 
         self.mdFile = mdFile
@@ -121,7 +223,6 @@ class PlotAngular(QtWidgets.QMainWindow):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.title = title
-        self.preprocess = preprocess
 
         sc = MplCanvas(self, width=5, height=4, dpi=100, polar=True)
         
@@ -131,48 +232,6 @@ class PlotAngular(QtWidgets.QMainWindow):
         azimuth = mdDict[labelAzimutal]
         counts = mdDict[labelCounts]
         
-        # Detect the coordinate system
-        rmin = np.amin(azimuth)
-        rmax = np.amax(azimuth)
-        tmin = np.amin(radius)
-        tmax = np.amax(radius)
-    
-        if (rmin < -90) or (tmax < 90):
-            print('The angular assigment does not follow the criterion of'
-                  'rot in [0,360) and tilt in [0,90]. The angles will be '
-                  'be converted into this criterion.')
-            print('The detected criterion consider a rot in [-180,180) and '
-                  ' a tilt in [0,90]. The angles will be converted into '
-                  ' rot in [0,360) and tilt in [0,90]. If the result is not'
-                  ' correct please check that the input set of particles has'
-                  ' the angles following this criterion rot in [0,360) and '
-                  ' tilt in [0,90]')
-        idx = azimuth < 0
-        azimuth[idx] = azimuth[idx] + 360
-
-        if ((rmin < 0) and (rmin > -90)) or (tmax > 90):
-            print('The angular assigment does not follow the criterion of'
-                  'rot in [0,360) and tilt in [0,90]. The angles will be '
-                  'be converted into this criterion.')
-            print('The detected criterion consider a rot in [-90,90) and '
-                  ' a tilt in [0,180]. The angles will be converted into '
-                  ' rot in [0,360) and tilt in [0,90]. If the result is not'
-                  ' correct please check that the input set of particles has'
-                  ' the angles following this criterion rot in [0,360) and '
-                  ' tilt in [0,90]')
-        
-        for k in np.arange(0, len(azimuth)):
-            if (azimuth[k] < 0) and (azimuth[k] <= 90):
-                azimuth[k] = azimuth[k] + 360
-            else:
-                if (azimuth[k] < 0) and (azimuth[k] > 90):
-                    azimuth[k] = azimuth[k] + 180
-                    radius[k] = 180 - radius[k]
-                else:
-                    if (azimuth[k] >= 0) and (radius[k] > 90):
-                        azimuth[k] = azimuth[k] + 180;
-                        radius[k] = 180 - radius[k];
-    
         # define binning
         azimuths = np.radians(np.linspace(0, 360, 360))
         zeniths = np.arange(0, 91, 1)
@@ -181,12 +240,9 @@ class PlotAngular(QtWidgets.QMainWindow):
     
         values = np.zeros((len(azimuths), len(zeniths)))
         
-        if self.preprocess is False:
-            for i in np.arange(0, len(azimuth)):
-                values[int(azimuth[i]), int(radius[i])] = counts[i]
-        else:
-            for i in np.arange(0, len(azimuth)):
-                values[int(azimuth[i]), int(radius[i])] += 1
+        for i in np.arange(0, len(azimuth)):
+            values[int(azimuth[i]), int(radius[i])] = counts[i]
+
                 
         # ------ Plot ------
         pc = sc.axes.contourf(theta, r, values, np.arange(0, values.max(), .1))
