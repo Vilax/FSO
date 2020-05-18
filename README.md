@@ -13,7 +13,17 @@ There are two independent ways of using/install this algorithm:
 
 ## Stand-alone installation
 
-The most simple manner is to install The Fourier Shell Occupancy algorithm via pip.
+Fourier Shell Occupancy uses a conda enviroment to do not interfer with the system that each user can have. Thus, the first step is to create a conda enviroment:
+
+1) Creation of the conda enviaroment
+1.1) Install anaconda Python 3x version from https://www.anaconda.com/distribution/
+1.2) Create an enviroment for Fourier Shell Occupancy algorithm
+    `conda create -n FourierShell python=3.7`
+    If conda command does not work, a solution is to export the path `export PATH=~/anaconda3/bin:$PATH` or even better to create an alias in your .bashrc file.
+1.3) Activate the conda enviroment
+`conda activate FourierShell`
+Note that every time you will want to use the Fourier Shell Occupancy, the command `conda activate FourierShell` will be required.
+
 
 1) Download the Fourier Occupancy Shell GUI an dall its dependencies
  `https://github.com/Vilax/FourierOccupancyShell.git`
