@@ -43,4 +43,12 @@ Before use the algoritm, Scipion needs to be installed. To do that see, Scipion 
 Once Scipipion have been installed, the Xmipp package is required, but it can be easily installed in the [plugin manager](https://scipion-em.github.io/docs/docs/user/plugin-manager.html#plugin-manager) inside Scipion.
 Then, the algorithm will be available to be used in Scipion. You can find the algorithm searching by `Ctrl+F`, or in the left lateral panel, in `3D->Analysis->Resolution->Xmipp - Forioer Shell Occupancy`
 
+## Troubleshooting
+
+There are some dependencies that are required. If in the Xmipp compilation some dependences are needed run
+```
+sudo apt-get install libsqlite3-dev libtiff5-dev libhdf5-dev
+```
+
+
 
