@@ -2,18 +2,19 @@ from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import os
-import icons
+#import icons
 from subprocess import Popen
-from analyzeResults import Ui_AnalyzeResults
-from scriptFunctions import launchXmippScript, launchChimeraSCript, addcolonmrc
+from libraries.analyzeResults import Ui_AnalyzeResults
+from libraries.scriptFunctions import launchXmippScript, launchChimeraSCript, addcolonmrc
 import configparser
+from libraries import icons
 
 
 class Ui(QtWidgets.QMainWindow):
     
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi('mainwindow_v0.ui', self)
+        uic.loadUi('GUI/mainwindow_v0.ui', self)
         
         configFile = configparser.ConfigParser()
         configFile.read('config.ini')
@@ -184,8 +185,8 @@ class Ui(QtWidgets.QMainWindow):
         params += " --half2 %s" % addcolonmrc(self.lineMap2.text()) 
         if (self.lineMask.text() != ""):
             params += " --mask " % (addcolonmrc(self.lineMask.text()))
-        if (self.lineParticles.text() != ""):
-            params += " --particles %s" % (self.lineParticles.text())
+        #if (self.lineParticles.text() != ""):
+        #    params += " --particles %s" % (self.lineParticles.text())
         params += " --anisotropy %s" % (self.resultsPath + "anisotropy.xmd")
         params += " --threedfsc %s"  % (self.resultsPath +"threeDfsc.mrc")
         if (self.bestAngle.isChecked() is False):
