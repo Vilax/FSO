@@ -13,28 +13,16 @@ There are two independent ways of using/install this algorithm:
 
 ## Stand-alone installation
 
-Fourier Shell Occupancy uses a conda enviroment to do not interfer with the system that each user can have. Thus, the first step is to create a conda enviroment:
+Fourier Shell Occupancy uses a enviroment to do not interfer with the system that each user can have. Thus, the first step is to create a conda enviroment:
 
-1) Creation of the conda enviaroment
-- Install anaconda Python 3x version from https://www.anaconda.com/distribution/
-
-- Create an enviroment for Fourier Shell Occupancy algorithm
-    `conda create -n FourierShell python=3.6`
-    If conda command does not work, a solution is to export the path `export PATH=~/anaconda3/bin:$PATH` or even better to create an alias in your .bashrc file.
-- Activate the conda enviroment
-`conda activate FourierShell`
-Note that every time you will want to use the Fourier Shell Occupancy, the command `conda activate FourierShell` will be required
-- Now the dependencies will be created, in particular, pyqt, numpy and matplotlib
-`conda install -c anaconda python=3.6 pyqt=5` and `conda install -c conda-forge matplotlib`
-
-2) Download the Fourier Occupancy Shell GUI an dall its dependencies
- `git clone https://github.com/Vilax/FourierShellOccupancy.git`
-3) Run the installer script
-`source install.sh`
+1) Download the Fourier Shell Occupancy using next command
+```git clone https://github.com/Vilax/FourierShellOccupancy.git```
+Git is neccesary to execute this command, if an error related to it appears, then install git `sudo apt install git`
+2) Run the installation script
+```source install.sh```
 3) Execute the software
-`python main.py`
+```python3 FSO.py```
 
-If for any reason this installer of step 2 fails. Open the file installer.sh and launch the commands one by one.
 
 ## Using in Scipion (still under development)
 
