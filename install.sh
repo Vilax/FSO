@@ -26,10 +26,6 @@ source FSO/bin/activate
 pip install pyqt5
 pip install matplotlib
 
-echo " "
-echo " "
-echo "Downloading Fourier Shell Occupancy..."
-git clone https://github.com/Vilax/FourierShellOccupancy.git
 
 
 
