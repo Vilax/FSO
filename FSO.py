@@ -8,17 +8,12 @@ from analyzeResults import Ui_AnalyzeResults
 from scriptFunctions import launchXmippScript, launchChimeraSCript, addcolonmrc
 import configparser
 
-class Stream(QtCore.QObject):
-    newText = QtCore.pyqtSignal(str)
-
-    def write(self, text):
-        self.newText.emit(str(text))
 
 class Ui(QtWidgets.QMainWindow):
     
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi('mainwindow.ui', self)
+        uic.loadUi('mainwindow_v0.ui', self)
         
         configFile = configparser.ConfigParser()
         configFile.read('config.ini')
@@ -67,8 +62,8 @@ class Ui(QtWidgets.QMainWindow):
         self.mask.clicked.connect(self.setMask)
         
         #Particles
-        self.particles = self.findChild(QtWidgets.QPushButton, 'browseParticles')
-        self.particles.clicked.connect(self.setParticles)
+        #self.particles = self.findChild(QtWidgets.QPushButton, 'browseParticles')
+        #self.particles.clicked.connect(self.setParticles)
         
         #Execute Button and Analyze
         self.execute = self.findChild(QtWidgets.QPushButton, 'ExecuteButton')
@@ -82,8 +77,14 @@ class Ui(QtWidgets.QMainWindow):
         self.process.readyRead.connect(self.executeButton)
         self.console = self.findChild(QtWidgets.QTextEdit, 'consoleOutput')
         
-        print(type(self.console))
-        self.console.setReadOnly(True)
+        #Checkbox bestAngle
+        self.bestAngle = self.findChild(QtWidgets.QCheckBox, 'checkBox')
+        self.coneAngle = self.findChild(QtWidgets.QLineEdit, 'lineCone')
+        self.angleLabel = self.findChild(QtWidgets.QLabel, 'angleLabel')
+        self.angleLabel.hide()
+        self.coneAngle.hide()
+        self.bestAngle.stateChanged.connect(self.bestAngleclick)
+        # self.console.setReadOnly(True)
         
         self.show()
     
@@ -130,6 +131,18 @@ class Ui(QtWidgets.QMainWindow):
     def showChimera(self, fn):
         launchChimeraSCript(fn, self.chimeraPath)
     
+    # def execute(cmd):
+    #     proc = Popen(cmd, shell=True, stdout=PIPE, bufsize=1, universal_newlines=True)
+        
+    #     while True:
+    #         line = proc.stdout.readline()
+            
+    #         if not line:
+    #             break
+    #         print(line, end ='')
+        
+    #     proc.wait()
+    
     def executeButton(self):
         xmippCmdline, params = self.createXmippScript()
         
@@ -141,23 +154,18 @@ class Ui(QtWidgets.QMainWindow):
         os.environ['XMIPP_HOME'] = self.xmippPath
         os.environ['PATH'] = self.xmippPath +'/bin'+':'+os.environ['PATH']
         os.environ['LD_LIBRARY_PATH'] = self.xmippPath + '/lib'+':'+os.environ['LD_LIBRARY_PATH']
+        
+        # from subprocess import Popen, PIPE, CalledProcessError
+        
+        # cmd = " ".join(["python -u -m"] + xmippCmdline) 
+            
+            
         import subprocess
         
-        # sys.stdout = Stream(newText=self.onUpdateText)
         process = subprocess.run([xmippCmdline], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, bufsize=1)
-
-        stdout, stderr = process.communicate()
-        print(process.stdout.decode('utf-8'))
-        # print(process.stdout)
-        # # self.onUpdateText(process.stdout.decode())
+        print(process.stdout)
         
-        # # os.system(xmippCmdline)
-        self.console.setText(self.process.readyReadStandardOutput)
-        
-        
-        # # stdout, stderr = launchXmippScript(xmippCmdline, self.xmippPath)
-        # # self.
-        # self.analyze.setEnabled(True)
+        self.analyze.setEnabled(True)
    
     def onUpdateText(self, text):
         cursor = self.console.textCursor()
@@ -180,14 +188,22 @@ class Ui(QtWidgets.QMainWindow):
             params += " --particles %s" % (self.lineParticles.text())
         params += " --anisotropy %s" % (self.resultsPath + "anisotropy.xmd")
         params += " --threedfsc %s"  % (self.resultsPath +"threeDfsc.mrc")
-        params += " --anglecone 20"
-        params += " --doCrossValidation "
+        if (self.bestAngle.isChecked() is False):
+            params += " --anglecone %s" % self.coneAngle.text()
         params += " --sampling %s" % self.lineSampling.text();
         params += " --fscfolder %s" % self.resultsPath
     
         return program, params;
-        
-        
+    
+    def bestAngleclick(self):
+        if (self.checkBox.isChecked()):
+            self.lineCone.hide();
+            self.lineCone.clear();
+            self.angleLabel.hide();
+        else:
+            self.lineCone.show();
+            self.angleLabel.show();
+  
         
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
