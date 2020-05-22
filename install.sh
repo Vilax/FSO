@@ -20,6 +20,7 @@ cd ..
 echo " "
 echo " "
 echo "Creating a virtual enviroment..."
+pip install --upgrade pip
 sudo apt-get install python3-venv
 python3 -m venv FSO
 source FSO/bin/activate
