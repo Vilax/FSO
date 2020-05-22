@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!../env/bin/python3
 # -*- coding: utf-8 -*-
 """
 Created on Fri May  1 01:18:11 2020
@@ -245,7 +245,15 @@ class PlotAngular(QtWidgets.QMainWindow):
 
                 
         # ------ Plot ------
-        pc = sc.axes.contourf(theta, r, values, np.arange(0, values.max(), .1))
+        stp = 0.1
+        lowlim = value.min()
+        if ((highlim - stp)<0):
+            lowlim = 0.0
+        else:
+            lowlim = lowlim - stp
+
+        highlim = values.max() + stp
+        pc = sc.axes.contourf(theta, r, values, np.arange(values.min(), highlim, stp))
     
         sc.fig.colorbar(pc)
 

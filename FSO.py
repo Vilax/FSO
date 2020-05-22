@@ -1,3 +1,4 @@
+#!./env/bin/python3
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtWidgets import QFileDialog
 import sys
@@ -102,8 +103,8 @@ class Ui(QtWidgets.QMainWindow):
                        "<b>Directional Fourier Shell Correlation (FSC)</b><br>"
                        "<small>This program may be used to estimate the directional FSC between two half maps. The directionality is measured by means of conical-like filters in Fourier Space. To avoid possible Gibbs effects the filters are gaussian functions with their respective maxima along the filtering direction. A set of 321 directions is used to cover the projection sphere, computing for each direction the directional FSC at 0.143 between the two half maps. The result is a set of 321 FSC curves. From then a 3DFSC is obtained by interpolation. Note that as well as it occurs with  global FSC, the directional FSC is mask dependent.</small><br>"
                        "<br>"
-                       "<b>Occupancy Fourier Shell Occupancy (FSO)</b><br>"
-                       "<small>The Occupancy Fourier Shell Curve can be obtained from the set of directional FSC curves estimated before. To do that, the two half maps are used to determine the Global FSC at threshold 0.143. Then, the ratio between the number of directions with resolution higher (better) than the Global resolution and the total number of measured directions is calculated at different frequencies (resolutions). Note that this ratio is between 0 (all directions presents worse) resolution than the global FSC)  and 1 (all directions present better resolution than the FSC) at a given resolution. In the particular case for which the FSO curve takes the value of 0.5, then half of the directions are better, and the other half are worse than the FSC. Therefore, the FSO curve at 0.5 should be the FSC value. Note that a map is isotropic if all directional resolution are similar, and anisotropic is there are significant resolution values along  different directions. Thus, when the OFSC present a sharp cliff, it means step-like function the map will be isotropic. In contrast, when the FSO shows a slope the map will be anisotropic. The lesser slope the higher resolution isotropy. </small><br>"
+                       "<b>Fourier Shell Occupancy (FSO)</b><br>"
+                       "<small>The  Fourier Shell Occupancy can be obtained from the set of directional FSC curves estimated before. To do that, the two half maps are used to determine the Global FSC at threshold 0.143. Then, the ratio between the number of directions with resolution higher (better) than the Global resolution and the total number of measured directions is calculated at different frequencies (resolutions). Note that this ratio is between 0 (all directions presents worse) resolution than the global FSC)  and 1 (all directions present better resolution than the FSC) at a given resolution. In the particular case for which the FSO curve takes the value of 0.5, then half of the directions are better, and the other half are worse than the FSC. Therefore, the FSO curve at 0.5 should be the FSC value. Note that a map is isotropic if all directional resolution are similar, and anisotropic is there are significant resolution values along  different directions. Thus, when the OFSC present a sharp cliff, it means step-like function the map will be isotropic. In contrast, when the FSO shows a slope the map will be anisotropic. The lesser slope the higher resolution isotropy. </small><br>"
                        "<br>"
                        "<b>Particle contribution to the resolution</b><br>"
                        "<small>If a set of particle is provided, the algorithm will determine the contribution of each particle to the directional resolution and it's effect in the resolution anisotropy. It means to determine if the directional resolution is explained by particles. If not, then probably your set of particle contains empty particles (noise), the reconstruction presents heterogeneity or flexibility, in that the heterogeneity should be solved and the map reconstructed again</small>");
@@ -160,11 +161,11 @@ class Ui(QtWidgets.QMainWindow):
         
         # cmd = " ".join(["python -u -m"] + xmippCmdline) 
             
-            
-        import subprocess
+        os.system(xmippCmdline)
+        #import subprocess
         
-        process = subprocess.run([xmippCmdline], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, bufsize=1)
-        print(process.stdout)
+        #process = subprocess.run([xmippCmdline], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, bufsize=1)
+        #print(process.stdout)
         
         self.analyze.setEnabled(True)
    
