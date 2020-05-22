@@ -11,9 +11,9 @@ from PyQt5 import QtWidgets, uic
 
 # import os
 import icons
-from plot_module import plotFSC
-from plotWindow import PlotAgainstResolution, PlotAngular
-from scriptFunctions import launchChimeraSCript
+from libraries.plot_module import plotFSC
+from libraries.plotWindow import PlotAgainstResolution, PlotAngular
+from libraries.scriptFunctions import launchChimeraSCript
 # from confPaths import confPaths
 
 class Ui_AnalyzeResults(QtWidgets.QDialog):
