@@ -8,7 +8,7 @@ For a detailed information about the algorithm see our manuscript SETLINK TO MAN
 
 There are two independent ways of using/install this algorithm:
 
-* Stand-alone installation - Nothind is required
+* Stand-alone installation - Nothing is required
 * As a Xmipp protocol inside Scipion - Requires Scipion (encouraged)
 
 ## Stand-alone installation
@@ -47,7 +47,7 @@ Then, the algorithm will be available to be used in Scipion. You can find the al
 
 There are some dependencies that are required. If in the Xmipp compilation some dependences are needed run
 ```
-sudo apt-get install libsqlite3-dev libtiff5-dev libhdf5-dev
+sudo apt-get install libsqlite3-dev libtiff5-dev libhdf5-dev python-numpy
 ```
 
 
