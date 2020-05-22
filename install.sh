@@ -19,8 +19,21 @@ cd ..
 
 echo " "
 echo " "
+echo "Creating a virtual enviroment..."
+sudo apt-get install python3-venv
+python3 -m venv FSO
+source FSO/bin/activate
+pip install pyqt5
+pip install matplotlib
+
+echo " "
+echo " "
 echo "Downloading Fourier Shell Occupancy..."
-git clone https://github.com/Vilax/FourierOccupancyShell.git
+git clone https://github.com/Vilax/FourierShellOccupancy.git
+
+
+
+
 
 
 
