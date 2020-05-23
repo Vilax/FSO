@@ -30,8 +30,7 @@ pip install matplotlib
 
 # Editing paths
 INITFILE="config.ini"
-rm ${INITFILE}config.ini
-
+rm ${INITFILE}
 XMIPP_PATH="/xmipp-lite/build"
 SEARCH_PATH=$HOME/.local
 CHIMERA_PATH=$(find ${SEARCH_PATH} -name "chimera" | grep bin)
