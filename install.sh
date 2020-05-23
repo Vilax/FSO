@@ -28,6 +28,18 @@ pip install --upgrade pip
 pip install pyqt5
 pip install matplotlib
 
+# Editing paths
+INITFILE="config.ini"
+rm ${INITFILE}config.ini
+
+XMIPP_PATH="/xmipp-lite/build"
+SEARCH_PATH=$HOME/.local
+CHIMERA_PATH=$(find ${SEARCH_PATH} -name "chimera" | grep bin)
+
+echo "[EXTERNAL_PROGRAMS]" >> $INITFILE
+echo "XMIPP_PATH = ${PWD}${XMIPP_PATH}" >> $INITFILE
+echo "CHIMERA_PATH = ${CHIMERA_PATH}" >> $INITFILE
+
 
 
 
