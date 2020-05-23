@@ -22,8 +22,8 @@ echo " "
 echo "Creating a virtual enviroment..."
 
 sudo apt-get install python3-venv
-python3 -m venv FSO
-source FSO/bin/activate
+python3 -m venv env
+source env/bin/activate
 pip install --upgrade pip
 pip install pyqt5
 pip install matplotlib
