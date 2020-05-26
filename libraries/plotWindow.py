@@ -246,7 +246,7 @@ class PlotAngular(QtWidgets.QMainWindow):
                 
         # ------ Plot ------
         stp = 0.1
-        lowlim = value.min()
+        lowlim = values.min()
         if ((highlim - stp)<0):
             lowlim = 0.0
         else:
