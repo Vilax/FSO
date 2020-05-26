@@ -64,7 +64,7 @@ class Ui(QtWidgets.QMainWindow):
         self.mask.clicked.connect(self.setMask)
         
         # Sampling rate
-        self.lineSampling.seText("1");
+        self.lineSampling.setText("1");
         
         #Particles
         #self.particles = self.findChild(QtWidgets.QPushButton, 'browseParticles')
