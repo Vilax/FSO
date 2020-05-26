@@ -13,10 +13,10 @@ There are two independent ways of using/install this algorithm:
 
 ## Stand-alone installation
 
-Fourier Shell Occupancy uses a enviroment to do not interfer with the system that each user can have. Thus, the first step is to create a conda enviroment:
+Fourier Shell Occupancy uses a enviroment to do not interfer with the system that each user can have:
 
 1) Download the Fourier Shell Occupancy using next command
-```https://github.com/Vilax/FSO.git```
+```git clone https://github.com/Vilax/FSO.git```
 Git is neccesary to execute this command, if an error related to it appears, then install git `sudo apt install git`
 2) Run the installation script
 ```source install.sh```
