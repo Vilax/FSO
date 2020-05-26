@@ -76,7 +76,7 @@ class Ui_AnalyzeResults(QtWidgets.QDialog):
         labelY = "_resolutionFRC"
         xlabel = 'Resolution (1/A)'
         ylabel = 'FSC (a.u.)'
-        title = 'Global Resolution - FSC'
+        title = 'Directional Resolution - FSC'
         hthresholds = [0.143]
         self.ui = PlotAgainstResolution(pathFile, labelX, labelY, xlabel, ylabel, title, hthresholds)
 
