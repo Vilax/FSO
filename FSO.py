@@ -63,6 +63,9 @@ class Ui(QtWidgets.QMainWindow):
         self.viewMask.clicked.connect(lambda: self.showChimera(self.lineMask.text()))
         self.mask.clicked.connect(self.setMask)
         
+        # Sampling rate
+        self.lineSampling.text(1);
+        
         #Particles
         #self.particles = self.findChild(QtWidgets.QPushButton, 'browseParticles')
         #self.particles.clicked.connect(self.setParticles)
