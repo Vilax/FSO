@@ -299,7 +299,7 @@ background-repeat: none;</string>
 background-color: rgb(32, 74, 135);</string>
        </property>
        <property name="text">
-        <string>Execute</string>
+        <string>Calculate</string>
        </property>
       </widget>
      </item>
@@ -315,7 +315,7 @@ background-color: rgb(32, 74, 135);</string>
         <string>Analyze Results</string>
        </property>
        <property name="text">
-        <string>Analyze</string>
+        <string>Visualize</string>
        </property>
       </widget>
      </item>
@@ -721,8 +721,6 @@ background-repeat: none;</string>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="Icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
