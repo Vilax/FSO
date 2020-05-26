@@ -41,7 +41,7 @@ echo "CHIMERA_PATH = ${CHIMERA_PATH}" >> $INITFILE
 
 EXECUTABLEFILE="FSO"
 echo "cd $(pwd)" >> $EXECUTABLEFILE
-echo "$(pwd)./Occupancy.py" >> $EXECUTABLEFILE
+echo "$(pwd)/Occupancy.py" >> $EXECUTABLEFILE
 chmod +x ${EXECUTABLEFILE}
 
 
