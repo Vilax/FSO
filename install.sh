@@ -40,8 +40,8 @@ echo "XMIPP_PATH = ${PWD}${XMIPP_PATH}" >> $INITFILE
 echo "CHIMERA_PATH = ${CHIMERA_PATH}" >> $INITFILE
 
 EXECUTABLEFILE="FSO.sh"
-echo "cd ${pwd}$" >> $EXECUTABLEFILE
-echo "$./Occupancy.py" >> $EXECUTABLEFILE
+echo "cd $(pwd)" >> $EXECUTABLEFILE
+echo "$(pwd)./Occupancy.py" >> $EXECUTABLEFILE
 
 
 
