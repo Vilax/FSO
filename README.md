@@ -19,9 +19,9 @@ Fourier Shell Occupancy uses a enviroment to do not interfer with the system tha
 ```git clone https://github.com/Vilax/FSO.git```
 Git is neccesary to execute this command, if an error related to it appears, then install git `sudo apt install git`
 2) Run the installation script
-```source install.sh```
-3) Execute the software
-```./FSO.py```
+```source installFSO.sh```
+3) Execute the software go to the software folder and run
+```./FSO```
 
 
 ## Using in Scipion (still under development)
