@@ -52,6 +52,21 @@ def formatFreq(value, pos):
         inv = 1 / value
     return "1/%0.2f" % inv
 
+def interpolRes(thr, x, y):
+    idx = np.arange(0,len(x))
+    aux = y<=thr
+    idx_x = idx[aux]
+    idx_2 = idx_x[0]
+    idx_1 = idx_2 - 1
+    y2 = x[idx_2]
+    y1 = x[idx_1]
+    x2 = y[idx_2]
+    x1 = y[idx_1]
+    slope = (y2 - y1)/(x2 - x1)
+    ny = y2 - slope*x2
+    resInterp = 1.0/(slope*thr + ny)
+    return resInterp
+
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -93,6 +108,19 @@ class PlotAgainstResolution(QtWidgets.QMainWindow):
         sc.axes.set_title(self.title)
         sc.axes.hlines(hthresholds, x[0], x[-1], colors = 'k', linestyles = 'dashed')
         sc.axes.grid(True)
+        textstr = ''
+        
+        if (len(hthresholds)>1):
+            res_01 = interpolRes(0.1, x, y)
+            res_05 = interpolRes(0.5, x, y)
+            res_09 = interpolRes(0.9, x, y)
+            textstr = str(0.9)+' --> ' + str("{:.2f}".format(res_09)) + '\n' + str(0.5)+' --> '+ str("{:.2f}".format(res_05)) + '\n' + str(0.1)+' --> ' + str("{:.2f}".format(res_01))
+            sc.axes.axvspan(1.0/res_09, 1.0/res_01, alpha=0.3, color='green')
+        else:
+            resInterp = interpolRes(hthresholds[0], x, y)
+            textstr = str(hthresholds) + ' -> ' + str("{:.2f}".format(resInterp))  
+        props = dict(boxstyle='round', facecolor='white')
+        sc.axes.text(0.0, 0.0, textstr, fontsize=12,  ha="left", va="bottom", bbox=props)
 
         # Create toolbar, passing canvas as first parament, parent (self, the MainWindow) as second.
         toolbar = NavigationToolbar(sc, self)
