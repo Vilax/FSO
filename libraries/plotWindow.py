@@ -114,11 +114,11 @@ class PlotAgainstResolution(QtWidgets.QMainWindow):
             res_01 = interpolRes(0.1, x, y)
             res_05 = interpolRes(0.5, x, y)
             res_09 = interpolRes(0.9, x, y)
-            textstr = str(0.9)+' --> ' + str("{:.2f}".format(res_09)) + '\n' + str(0.5)+' --> '+ str("{:.2f}".format(res_05)) + '\n' + str(0.1)+' --> ' + str("{:.2f}".format(res_01))
+            textstr = str(0.9)+' --> ' + str("{:.2f}".format(res_09)) + 'A\n' + str(0.5)+' --> '+ str("{:.2f}".format(res_05)) + 'A\n' + str(0.1)+' --> ' + str("{:.2f}".format(res_01)) + 'A'
             sc.axes.axvspan(1.0/res_09, 1.0/res_01, alpha=0.3, color='green')
         else:
             resInterp = interpolRes(hthresholds[0], x, y)
-            textstr = str(hthresholds) + ' -> ' + str("{:.2f}".format(resInterp))  
+            textstr = str(hthresholds[0]) + ' -> ' + str("{:.2f}".format(resInterp)) + 'A' 
         props = dict(boxstyle='round', facecolor='white')
         sc.axes.text(0.0, 0.0, textstr, fontsize=12,  ha="left", va="bottom", bbox=props)
 

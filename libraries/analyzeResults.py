@@ -87,8 +87,8 @@ class Ui_AnalyzeResults(QtWidgets.QDialog):
         labelX = "_resolutionFreqFourier"
         labelY = "_resolutionFRC"
         xlabel = 'Resolution (1/A)'
-        ylabel = 'FOS (a.u.)'
-        title = 'Fourier Occupancy Shell Curve - FOS'
+        ylabel = 'FSO (a.u.)'
+        title = 'Fourier Shell Occupancy - FSO'
         hthresholds = [0.1, 0.5, 0.9]
         self.ui = PlotAgainstResolution(pathFile, labelX, labelY, xlabel, ylabel, title, hthresholds)
 
