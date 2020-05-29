@@ -21,7 +21,11 @@ echo " "
 echo " "
 echo "Creating a virtual enviroment..."
 
+ifvenv=$(pip list | grep virtualenv)
+if [[ $ifvenv =~ *"virtualenv"* ]]
 pip install -U virtualenv
+fi
+
 python3 -m venv env
 source env/bin/activate
 pip install --upgrade pip
