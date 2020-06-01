@@ -28,7 +28,7 @@ pip install -U virtualenv
 fi
 
 python3 -m venv env
-source env/bin/activate
+. env/bin/activate
 pip install --upgrade pip
 pip install pyqt5
 pip install matplotlib
