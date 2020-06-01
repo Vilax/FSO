@@ -22,7 +22,8 @@ echo " "
 echo "Creating a virtual enviroment..."
 
 ifvenv=$(pip list | grep virtualenv)
-if [[ $ifvenv =~ *"virtualenv"* ]]
+if [ $ifvenv =~ *"virtualenv"* ]
+then
 pip install -U virtualenv
 fi
 
