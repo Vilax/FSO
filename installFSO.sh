@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This script download all programs requires to run the Fourier Shell Occupancy algorithm
 
@@ -22,7 +22,7 @@ echo " "
 echo "Creating a virtual enviroment..."
 
 ifvenv=$(pip list | grep virtualenv)
-if [[ $ifvenv != *"virtualenv"* ]];
+if [ $ifvenv != *"virtualenv"* ];
 then
 pip install -U virtualenv
 fi
