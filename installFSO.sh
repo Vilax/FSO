@@ -24,7 +24,7 @@ echo "Creating a virtual enviroment..."
 ifvenv=$(pip list | grep virtualenv)
 if [ $ifvenv != *"virtualenv"* ];
 then
-pip install -U virtualenv
+pip install virtualenv
 fi
 
 python3 -m venv env
