@@ -5,14 +5,13 @@
 # The first step is to download Xmipp-lite and compile it (Xmipp lite is a xmipp version without CUDA, python, just resolution related algorithms)
 
 echo "Cloning xmipp-lite repository..."
-git clone https://github.com/Vilax/xmipp-lite.git
+git clone https://github.com/I2PC/xmipp.git && cd xmipp
 
 echo " "
 echo " "
-echo "Compiling xmipp-lite..."
+echo "Compiling xmipp..."
 echo " "
 
-cd xmipp-lite
 chmod +x xmipp
 ./xmipp
 cd ..
@@ -48,6 +47,15 @@ EXECUTABLEFILE="FSO"
 echo "cd $(pwd)" >> $EXECUTABLEFILE
 echo "$(pwd)/Occupancy.py" >> $EXECUTABLEFILE
 chmod +x ${EXECUTABLEFILE}
+
+
+
+
+
+
+
+
+
 
 
 
