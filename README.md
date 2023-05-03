@@ -2,7 +2,7 @@
 
 The Fourier Shell Occupancy (FSO) algorithm measures the Global resolution anisotropy for cryo-EM maps, determining the quality of the map as well as infere if the particle distribution used to reconstruct the map is compatible with the resolution distributionvia directional FSC.
 
-For a detailed information about the algorithm see our manuscript SETLINK TO MANUSCRIPT
+For a detailed information about the algorithm see our manuscript https://www.researchsquare.com/article/rs-1585291/v1
 
 # Required Dependencies
 
