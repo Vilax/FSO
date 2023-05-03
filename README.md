@@ -8,7 +8,7 @@ For a detailed information about the algorithm see our manuscript https://www.re
 
 Be sure you have the next dependencies in your system:
 ```
-sudo apt-get -y install libsqlite3-dev libfftw3-dev libtiff5-dev libhdf5-dev libopencv-dev python3-dev python3-numpy python3-scipy python3-mpi4py
+sudo apt-get -y install libsqlite3-dev libfftw3-dev default-jdk libtiff5-dev libhdf5-dev libopencv-dev python3-dev python3-numpy python3-scipy python3-mpi4py
 ```
 
 # How to use it
