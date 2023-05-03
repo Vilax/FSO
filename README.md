@@ -11,12 +11,13 @@ Be sure you have the next dependencies in your system:
 sudo apt-get -y install libsqlite3-dev libfftw3-dev libtiff5-dev libhdf5-dev libopencv-dev python3-dev python3-numpy python3-scipy python3-mpi4py
 ```
 
-# Installation
+# How to use it
 
-There are two independent ways of using/install this algorithm:
+There are two independent ways of using this algorithm:
 
-* Stand-alone installation - Nothing is required
-* As a Xmipp protocol inside Scipion - Requires Scipion (encouraged)
+* Inside Scipion (recommended) - Requires Scipion
+* As Stand-alone application - Nothing is required
+
 
 ## Stand-alone installation
 
@@ -31,9 +32,9 @@ Git is neccesary to execute this command, if an error related to it appears, the
 ```./FSO```
 
 
-## Using in Scipion (still under development)
+## Using in Scipion
 
-Before use the algoritm, Scipion needs to be installed. To do that, see Scipion installation instructions in the [Scipion Official web site](http://scipion.i2pc.es/).
+Before using the algoritm, Scipion needs to be installed. To do that, see Scipion installation instructions in the [Scipion Official web site](http://scipion.i2pc.es/).
 
 Once Scipipion have been installed, the Xmipp package is required, but it can be easily installed in the [plugin manager](https://scipion-em.github.io/docs/docs/user/plugin-manager.html#plugin-manager) inside Scipion.
 Then, the algorithm will be available to be used in Scipion. You can find the algorithm searching by `Ctrl+F`, or in the left lateral panel, in `3D->Analysis->Resolution->Xmipp - Forioer Shell Occupancy`
