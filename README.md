@@ -4,25 +4,49 @@ The Fourier Shell Occupancy (FSO) algorithm measures the Global resolution aniso
 
 For a detailed information about the algorithm see our manuscript https://www.researchsquare.com/article/rs-1585291/v1
 
-# Important Note about use and installation
-
-The stand-along version is under refactorization (May 29th 2023), it will be released during the following. Until this refactorization will be finished, the FSO can be used vía Scipion
-
 # How to use it
 
 There are two independent ways of using this algorithm:
 
-* Inside Scipion (recommended)
-* As Stand-alone application (Under refactorization)
+* Inside Scipion (recommended): This version is much faster than the standalone version. The code is updated and provides mucho more visualization tools
+* As Stand-alone application: It is slow but it does not requires anything else
 
-For shake of simplicity we encourage to use the FSO inside Scipion. However, it is also possible to use the FSO as stand alone application.
+For shake of simplicity we encourage to use the FSO inside Scipion. 
 
-## Using in Scipion
+## FSO in Scipion
 
 Before using the algorithm, Scipion needs to be installed. To do that, see Scipion installation instructions in the [Scipion Official web site](http://scipion.i2pc.es/).
 
 Once Scipipion have been installed, the Xmipp package is required, but it can be easily installed in the [plugin manager](https://scipion-em.github.io/docs/docs/user/plugin-manager.html#plugin-manager) inside Scipion.
-Then, the algorithm will be available to be used in Scipion. You can find the algorithm searching by `Ctrl+F`, or in the left lateral panel, in `3D->Analysis->Resolution->Xmipp - Fourier Shell Occupancy`
+Then, the algorithm will be available to be used in Scipion. You can find the algorithm searching by `Ctrl+F`, `xmipp - resolution fso`
+
+# Stand-alone version
+
+To use the stand alone version, you only need to clone this repository and execute the installer
+
+1) Cloning the repository
+
+```
+git clone https://github.com/Vilax/FSO
+
+```
+2) Installing the software. This step creates a virtual environment and install: numpy, mrcfile, matplotlib and pyqt
+
+```
+source installFSO.sh
+```
+
+3) Execute FSO or ```python3 fso.py```
+
+Any comment please contact us:
+
+# Reference :
+
+[J.L. Vilas, H.D. Tagare, New measures of anisotropy of cryo-EM maps, Nature Methods (2023)](https://doi.org/10.1038/s41592-023-01874-3)
+
+
+
+
 
 
 
