@@ -303,22 +303,6 @@ background-color: rgb(32, 74, 135);</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="AnalyzeButton_2">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="toolTip">
-        <string>Analyze Results</string>
-       </property>
-       <property name="text">
-        <string>Visualize</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QLineEdit" name="lineSampling">
@@ -350,7 +334,10 @@ background-color: rgb(32, 74, 135);</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sampling rate (Mandatory Parameter)&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Provide the pixel size in A/px&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
-     <string>Sampling Rate (A/px)</string>
+     <string>Sampling (A/px)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QFrame" name="Topframe">
@@ -605,6 +592,9 @@ background-repeat: none;</string>
     </property>
     <property name="text">
      <string>Angle</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox">
