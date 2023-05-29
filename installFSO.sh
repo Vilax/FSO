@@ -21,7 +21,7 @@ pip install matplotlib
 
 EXECUTABLEFILE="FSO"
 echo "cd $(pwd)" >> $EXECUTABLEFILE
-echo "$(pwd)/Occupancy.py" >> $EXECUTABLEFILE
+echo "$(pwd)/fso.py" >> $EXECUTABLEFILE
 chmod +x ${EXECUTABLEFILE}
 
 
