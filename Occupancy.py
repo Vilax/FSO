@@ -5,7 +5,6 @@ import sys
 import os
 #import icons
 from subprocess import Popen
-from libraries.analyzeResults import Ui_AnalyzeResults
 from libraries.scriptFunctions import launchXmippScript, launchChimeraSCript, addcolonmrc
 import configparser
 from libraries import icons
@@ -73,8 +72,6 @@ class Ui(QtWidgets.QMainWindow):
         #Execute Button and Analyze
         self.execute = self.findChild(QtWidgets.QPushButton, 'ExecuteButton')
         self.execute.clicked.connect(self.executeButton)
-        self.analyze = self.findChild(QtWidgets.QPushButton, 'AnalyzeButton_2')
-        self.analyze.clicked.connect(self.analyzeButton)
         
         # QProcess object for external app
         self.process = QtCore.QProcess(self)
@@ -90,6 +87,8 @@ class Ui(QtWidgets.QMainWindow):
         self.coneAngle.hide()
         self.bestAngle.stateChanged.connect(self.bestAngleclick)
         # self.console.setReadOnly(True)
+        self.pwdir = os.getcwd()
+
         
         self.show()
     
@@ -108,14 +107,12 @@ class Ui(QtWidgets.QMainWindow):
                        "<br>"
                        "<b>Fourier Shell Occupancy (FSO)</b><br>"
                        "<small>The  Fourier Shell Occupancy can be obtained from the set of directional FSC curves estimated before. To do that, the two half maps are used to determine the Global FSC at threshold 0.143. Then, the ratio between the number of directions with resolution higher (better) than the Global resolution and the total number of measured directions is calculated at different frequencies (resolutions). Note that this ratio is between 0 (all directions presents worse) resolution than the global FSC)  and 1 (all directions present better resolution than the FSC) at a given resolution. In the particular case for which the FSO curve takes the value of 0.5, then half of the directions are better, and the other half are worse than the FSC. Therefore, the FSO curve at 0.5 should be the FSC value. Note that a map is isotropic if all directional resolution are similar, and anisotropic is there are significant resolution values along  different directions. Thus, when the OFSC present a sharp cliff, it means step-like function the map will be isotropic. In contrast, when the FSO shows a slope the map will be anisotropic. The lesser slope the higher resolution isotropy. </small><br>"
-                       "<br>"
-                       "<b>Particle contribution to the resolution</b><br>"
-                       "<small>If a set of particle is provided, the algorithm will determine the contribution of each particle to the directional resolution and it's effect in the resolution anisotropy. It means to determine if the directional resolution is explained by particles. If not, then probably your set of particle contains empty particles (noise), the reconstruction presents heterogeneity or flexibility, in that the heterogeneity should be solved and the map reconstructed again</small>");
+                       "<br>");
 
 
     def cite(self):
         QtWidgets.QMessageBox.about(self, "Reference of the algorithm",
-                                    "Reference: J.L. Vilas, H.D. Tagare, XXXXX (2020)")
+                                    "Reference: J.L. Vilas, H.D. Tagare, Nature Methods (2023)")
 
     def setMap1(self):
         pathlineMap1 = QFileDialog.getOpenFileName(self,    "Select Half Map 1", self.pathApp)
@@ -149,28 +146,26 @@ class Ui(QtWidgets.QMainWindow):
     #     proc.wait()
     
     def executeButton(self):
-        xmippCmdline, params = self.createXmippScript()
+        xmippCmdline, params = self.createScript()
         
         if not os.path.exists(self.resultsPath):
             os.makedirs(self.resultsPath)
         
         xmippCmdline = xmippCmdline + " " + params
-        env_var = os.environ
-        os.environ['XMIPP_HOME'] = self.xmippPath
-        os.environ['PATH'] = self.xmippPath +'/bin'+':'+os.environ['PATH']
-        os.environ['LD_LIBRARY_PATH'] = self.xmippPath + '/lib'+':'+os.environ['LD_LIBRARY_PATH']
+        #env_var = os.environ
+        #os.environ['XMIPP_HOME'] = self.xmippPath
+        #os.environ['PATH'] = self.xmippPath +'/bin'+':'+os.environ['PATH']
+        #os.environ['LD_LIBRARY_PATH'] = self.xmippPath + '/lib'+':'+os.environ['LD_LIBRARY_PATH']
         
         # from subprocess import Popen, PIPE, CalledProcessError
         
         # cmd = " ".join(["python -u -m"] + xmippCmdline) 
-            
+        print(xmippCmdline)
         os.system(xmippCmdline)
         #import subprocess
         
         #process = subprocess.run([xmippCmdline], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, bufsize=1)
         #print(process.stdout)
-        
-        self.analyze.setEnabled(True)
    
     def onUpdateText(self, text):
         cursor = self.console.textCursor()
@@ -178,26 +173,20 @@ class Ui(QtWidgets.QMainWindow):
         cursor.insertText(text)
         self.console.setTextCursor(cursor)
         self.console.ensureCursorVisible()
-     
-    def analyzeButton(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_AnalyzeResults(self.chimeraPath, self.resultsPath)
 
-    def createXmippScript(self):
-        program = "xmipp_resolution_directional_FSC "
-        params =  " --half1 %s" % addcolonmrc(self.lineMap1.text())
-        params += " --half2 %s" % addcolonmrc(self.lineMap2.text()) 
+    def createScript(self):
+    
+        program = 'python3 ' + os.path.join(self.pwdir,"fso.py")
+        params =  " --half1 %s" % self.lineMap1.text()
+        params += " --half2 %s" % self.lineMap2.text()
         if (self.lineMask.text() != ""):
-            params += " --mask " % (addcolonmrc(self.lineMask.text()))
-        #if (self.lineParticles.text() != ""):
-        #    params += " --particles %s" % (self.lineParticles.text())
-        params += " --anisotropy %s" % (self.resultsPath + "anisotropy.xmd")
-        params += " --threedfsc %s"  % (self.resultsPath +"threeDfsc.mrc")
+            params += " --mask %s" % self.lineMask.text()
         if (self.bestAngle.isChecked() is False):
             params += " --anglecone %s" % self.coneAngle.text()
         params += " --sampling %s" % self.lineSampling.text();
-        params += " --fscfolder %s" % self.resultsPath
-    
+        params += " -o %s" % self.resultsPath
+        params += " --threshold %f" %0.143 
+        
         return program, params;
     
     def bestAngleclick(self):

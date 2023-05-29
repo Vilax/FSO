@@ -14,18 +14,10 @@ python3 -m venv env
 . env/bin/activate
 pip install --upgrade pip
 pip install pyqt5
+pip install numpy
+pip install mrcfile
 pip install matplotlib
 
-# Editing paths
-INITFILE="config.ini"
-rm ${INITFILE}
-XMIPP_PATH="/xmipp-lite/build"
-SEARCH_PATH=$HOME/.local
-CHIMERA_PATH=$(find ${SEARCH_PATH} -name "chimera" | grep bin)
-
-echo "[EXTERNAL_PROGRAMS]" >> $INITFILE
-echo "XMIPP_PATH = ${PWD}${XMIPP_PATH}" >> $INITFILE
-echo "CHIMERA_PATH = ${CHIMERA_PATH}" >> $INITFILE
 
 EXECUTABLEFILE="FSO"
 echo "cd $(pwd)" >> $EXECUTABLEFILE

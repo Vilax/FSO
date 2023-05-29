@@ -21,9 +21,7 @@ parser.add_argument('-anglecone', '--anglecone', type=float, required=False, def
                     help="(Optional) Angle Cone in degrees (angle between the axis and the  generatrix) for estimating the directional FSC")
 parser.add_argument('-o', '--output', type=str, required=True, help="Folder where the results will be stored.")
 parser.add_argument('-t', '--threads', required=False, default=1, help="(Optional) Number of threads to be used")
-parser.add_argument('-threedfsc_filter', '--threedfsc_filter', type=str, required=False, default=False,
-                    help="(Optional) Put this flag to estimate the 3DFSC, and apply it as low pass filter to obtain a directionally filtered map. It mean to apply an anisotropic filter.")
-parser.add_argument('-threshold', '--threshold', type=str, required=False, default=0.143,
+parser.add_argument('-threshold', '--threshold', type=float, required=False, default=0.143,
                     help="(Optional) Threshold for the FSC/directionalFSC estimation")
 
 
