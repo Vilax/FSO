@@ -703,18 +703,36 @@ background-repeat: none;</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>280</y>
+      <y>260</y>
       <width>561</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">
-     <string>This is a stand-alone version. Scipion version is faster and provides better visualization tools</string>
+     <string>This is a stand-alone version.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>290</y>
+      <width>501</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Scipion version is faster and provides better visualization tools (recommended)</string>
     </property>
    </widget>
   </widget>

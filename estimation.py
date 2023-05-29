@@ -164,8 +164,15 @@ def dirFSC(dir, ang_con, idxFreq, num, den1, den2, u, ux, uy, uz, Nfreqs, thresh
             fscdir[i] = 0.0
         if fscdir[i] >= threshold:
             freqMat[i] += T
-    # idxfreqMat = fscdir>=threshold
-    dirRes = 0
+
+    indi = np.arange(0, len(fscdir))
+    aux = fscdir<threshold
+    auxIdx = indi[aux]
+    dirRes = 0.5
+    for i in auxIdx:
+        if i>2:
+            dirRes = i/(2*len(fscdir))
+            break
 
     return fscdir, freqMat, dirRes
 
@@ -256,10 +263,13 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     counter = 0
     alldirfsc = np.zeros((Ndirections[0], round(mapSize / 2)))
     freqMat = [np.zeros([3, 3]) for _ in range(round(mapSize / 2))]
+    dirRes = np.zeros(Ndirections[0])
     for dir in range(0, Ndirections[0]):
         counter = counter + 1
-        alldirfsc[dir, :], freqMat, dirRes = dirFSC(angles[dir], ang_con, idxFreq, num, den1, den2, freqMap, fx, fy, fz,
+        alldirfsc[dir, :], freqMat, dirRes[dir] = dirFSC(angles[dir], ang_con, idxFreq, num, den1, den2, freqMap, fx, fy, fz,
                                                     round(mapSize / 2), threshold, freqMat)
+        dirRes[dir] = sampling/dirRes[dir]
+
 
     sig = np.copy(alldirfsc)
     sig[alldirfsc >= threshold] = 1.0
@@ -275,6 +285,7 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     plotFSO(np.divide(sampling, resolutions)/sampling, fso, binghanCurve, 'Resolution ($A^{-1}$)', 'FSO (a.u)',
             'FSO and Bingham curves', sampling)
 
+    resolutionDistribution(dirRes, ang_con, angles, sampling)
 
 def binghamTest(NdirFSCgreaterThreshold, freqMat, Nfreqs):
     binghamCurve = np.zeros(Nfreqs)
@@ -366,114 +377,82 @@ def plotFSO(x, y1, yyBingham, xlabel, ylabel, title, sampling):
         props = dict(boxstyle='round', facecolor='white')
         plt.text(0.0, 0.0, textstr, fontsize=12, ha="left", va="bottom", bbox=props)
     plt.grid(True)
-    plt.show(block=False)
-    plt.show()
-
-    '''
-    def _showPolarPlot(self, fnmd):
-        """
-        It is called by _showDirectionalResolution
-        This function shows the angular distribution of the resolution
-        """
-        md = emlib.MetaData(fnmd)
-
-        radius = md.getColumnValues(emlib.MDL_ANGLE_ROT)
-        azimuth = md.getColumnValues(emlib.MDL_ANGLE_TILT)
-        counts = md.getColumnValues(emlib.MDL_RESOLUTION_FRC)
-
-        # define binning
-        azimuths = np.radians(np.linspace(0, 360, 360))
-        zeniths = np.arange(0, 91, 1)
-
-        r, theta = np.meshgrid(zeniths, azimuths)
-
-        values = np.zeros((len(azimuths), len(zeniths)))
-
-        for i in range(0, len(azimuth)):
-            values[int(radius[i]), int(azimuth[i])] = counts[i]
-
-        # ------ Plot ------
-        stp = 0.1
-        lowlim = max(0.0, values.min())
-
-        highlim = values.max() + stp
-        fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
-        pc = plt.contourf(theta, r, values, np.arange(lowlim, highlim, stp), cmap=self.getColorMap())
-
-        plt.colorbar(pc)
-        plt.show()
-
-    def getColorMap(self):
-        cmap = cm.get_cmap(self.colorMap.get())
-        if cmap is None:
-            cmap = cm.jet
-        return cmap
-
-def resolutionDistribution(resDirFSC, FileName &fn)
-    {
-    	anglesResolution;
-    	Nrot = 360
-    	Ntilt = 91
-    	objIdOut
 
 
+def resolutionDistribution(resDirFSC, ang_con, anglesDir, sampling):
+    Nrot = 360
+    Ntilt = 91
 
-    	w.initZeros(Nrot, Ntilt)
-    	wt = w
-    	const float cosAngle = cosf(ang_con);
-    	const float aux = 4.0/((cosAngle -1)*(cosAngle -1));
-    	// Directional resolution is store in a metadata
-			
-		for (int i=0; i<Nrot; i++)
-		{
-			float rotmatrix =  i*PI/180.0;
-			float cr = cosf(rotmatrix);
-			float sr = sinf(rotmatrix);
+    Nangs = np.shape(anglesDir)
 
-			for (int j=0; j<Ntilt; j++)
-			{
-				float tiltmatrix = j*PI/180.0;
-				// position on the spehere
-				float st = sinf(tiltmatrix);
-				float xx = st*cr;
-				float yy = st*sr;
-				float zz = cosf(tiltmatrix);
+    w = np.zeros([Nrot, Ntilt])
+    wt = w
+    cosAngle = np.cos(ang_con)
+    aux = 4.0/((cosAngle -1)*(cosAngle -1))
+    # Directional resolution is store in a metadata
+    Ntot = Nrot*Ntilt
+    toplot=np.zeros([Ntot, 3])
+    counter = 0
+    for i in range(0,Nrot):
+        rotmatrix = i*3.141592/180.0
+        cr = np.cos(rotmatrix)
+        sr = np.sin(rotmatrix)
 
-				// initializing the weights
-				double w = 0;
-				double wt = 0;
+        for j in range(0, Ntilt):
+            tiltmatrix = j*3.141592/180.0
+            # position on the sphere
+            st = np.sin(tiltmatrix)
+            xx = st*cr
+            yy = st*sr
+            zz = np.cos(tiltmatrix)
 
-				for (size_t k = 0; k<angles.mdimx; k++)
-				{
+            # initializing the weights
+            w = 0
+            wt = 0
 
-					float rot = MAT_ELEM(angles, 0, k);
-					float tilt = MAT_ELEM(angles, 1, k);
+            for k in range(0, Nangs[0]):
+                direc =  anglesDir[k]
+                rot = direc[0]#MAT_ELEM(angles, 0, k)
+                tilt = direc[1] #MAT_ELEM(angles, 1, k)
+                st2 = np.sin(tilt)
+                # position of the direction on the sphere
+                x_dir = st2*np.cos(rot)
+                y_dir = st2*np.sin(rot)
+                z_dir = np.cos(tilt)
 
-					// position of the direction on the sphere
-					float x_dir = sinf(tilt)*cosf(rot);
-					float y_dir = sinf(tilt)*sinf(rot);
-					float z_dir = cosf(tilt);
+                cosine = np.absolute(x_dir*xx + y_dir*yy + z_dir*zz)
+                if cosine>=cosAngle:
+                    cosine = np.exp( -((cosine -1)*(cosine -1))*aux )
+                    w += cosine*resDirFSC[k]
+                    wt += cosine
 
-
-					float cosine = fabs(x_dir*xx + y_dir*yy + z_dir*zz);
-					if (cosine>=cosAngle)
-					{
-						cosine = expf( -((cosine -1)*(cosine -1))*aux );
-						w += cosine*( dAi(resDirFSC, k) );
-						wt += cosine;
-					}
-				}
-
-				double wRes = w/wt;
-				{
-					MDRowVec row;
-					row.setValue(MDL_ANGLE_ROT, (double) i);
-					row.setValue(MDL_ANGLE_TILT, (double) j);
-					row.setValue(MDL_RESOLUTION_FRC, wRes);
-					mdOut.addRow(row);
-				}
-			}
-		}
-    }
+            toplot[counter, 0] = i
+            toplot[counter, 1] = j
+            toplot[counter, 2] = w/(wt+1e-38)
+            counter += 1
     
-    '''
+    radius = toplot[:,0]
+    azimuth = toplot[:,1]
+    counts = toplot[:,2]
+    
+    # define binning
+    azimuths = np.radians(np.linspace(0, 360, 360))
+    zeniths = np.arange(0, 91, 1)
+
+    r, theta = np.meshgrid(zeniths, azimuths)
+
+    values = np.zeros((len(azimuths), len(zeniths)))
+
+    for i in range(0, len(azimuth)):
+        values[int(radius[i]), int(azimuth[i])] = counts[i]
+
+    # ------ Plot ------
+    stp = 0.1
+    lowlim = max(2*sampling, values.min())
+
+    highlim = values.max() + stp
+    fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
+    pc = plt.contourf(theta, r, values, np.arange(lowlim, highlim, stp), cmap='viridis', levels=50)
+
+    plt.colorbar(pc)
+    plt.show()
