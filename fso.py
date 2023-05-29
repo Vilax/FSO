@@ -1,8 +1,11 @@
 #!./env/bin/python3
+import matplotlib.pyplot as plt
+import numpy as np
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import os
+import mrcfile
 #import icons
 from subprocess import Popen
 from libraries.scriptFunctions import launchXmippScript, launchChimeraSCript, addcolonmrc
@@ -16,12 +19,7 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         uic.loadUi('GUI/mainwindow_v0.ui', self)
         
-        configFile = configparser.ConfigParser()
-        configFile.read('config.ini')
-        
-        self.xmippPath = configFile['EXTERNAL_PROGRAMS']['XMIPP_PATH']
-        self.chimeraPath = configFile['EXTERNAL_PROGRAMS']['CHIMERA_PATH']
-        
+       
         self.pathApp = os.getcwd()
         self.resultsPath = self.pathApp + "/results/"
         
@@ -131,8 +129,14 @@ class Ui(QtWidgets.QMainWindow):
         self.lineParticles.setText(pathParticles[0])
         
     def showChimera(self, fn):
-        launchChimeraSCript(fn, self.chimeraPath)
-    
+
+        mymap = mrcfile.open(fn).data
+        _, _, mid = np.shape((mymap))
+        plt.figure()
+        plt.imshow(mymap[:,:,round(0.5*mid)])
+        plt.colorbar
+        plt.show()
+
     # def execute(cmd):
     #     proc = Popen(cmd, shell=True, stdout=PIPE, bufsize=1, universal_newlines=True)
         
@@ -176,7 +180,7 @@ class Ui(QtWidgets.QMainWindow):
 
     def createScript(self):
     
-        program = 'python3 ' + os.path.join(self.pwdir,"fso.py")
+        program = 'python3 ' + os.path.join(self.pwdir,"main.py")
         params =  " --half1 %s" % self.lineMap1.text()
         params += " --half2 %s" % self.lineMap2.text()
         if (self.lineMask.text() != ""):
