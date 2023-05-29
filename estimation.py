@@ -24,9 +24,6 @@ def prepareData(fnHalf1, fnHalf2, fnMask=None):
         half1 = np.multiply(half1, mask)
         half2 = np.multiply(half2, mask)
 
-    # plt.imshow(half2[:,:,128])
-    # plt.show()
-
     return half1, half2, mask
 
 
@@ -35,22 +32,7 @@ def defineFrequencies(mapSize):
     fx, fy, fz = np.meshgrid(freq, freq, freq)
 
     freqMap = np.sqrt(np.multiply(fx, fx) + np.multiply(fy, fy) + np.multiply(fz, fz))
-
-    # plt.imshow(freqMap[0, :, :])
-    # plt.show()
-
     candidates = freqMap <= 0.5
-
-    '''
-    freqElems = np.zeros(mapSize)
-    
-    idx = []
-    for i in range(0, candidatesIdx.size):
-        j = int(candidatesIdx[i])
-        idx.append(j)
-        freqElems[j]+=1
-    '''
-
     return freqMap, candidates, fx[candidates], fy[candidates], fz[candidates]
 
 
@@ -78,7 +60,7 @@ def arrangeFSC_and_fscGlobal(FT1, FT2, idxFreq, mapSize, sampling, threshold):
     fscglob = np.divide(num_dirfsc, np.sqrt(np.multiply(den1_dirfsc, den2_dirfsc) + 1e-38))
     fscglob[0] = 1
     digFreq = np.divide(fourierIdx + 1.0, mapSize)
-    print('--> %f', sampling)
+
     resolutions = np.divide(sampling, digFreq)
 
     fig, ax = plt.subplots()
@@ -285,7 +267,7 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     plotFSO(np.divide(sampling, resolutions)/sampling, fso, binghanCurve, 'Resolution ($A^{-1}$)', 'FSO (a.u)',
             'FSO and Bingham curves', sampling)
 
-    resolutionDistribution(dirRes, ang_con, angles, sampling)
+    #resolutionDistribution(dirRes, ang_con, angles, sampling)
 
 def binghamTest(NdirFSCgreaterThreshold, freqMat, Nfreqs):
     binghamCurve = np.zeros(Nfreqs)
