@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>301</height>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -698,6 +698,24 @@ background-repeat: none;</string>
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>280</y>
+      <width>561</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>This is a stand-alone version. Scipion version is faster and provides better visualization tools</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
