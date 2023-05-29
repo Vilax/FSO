@@ -38,7 +38,7 @@ source installFSO.sh
 
 3) Execute FSO or ```python3 fso.py```
 
-Any comment please contact us:
+Any comment please contact us, visit the article to find our email
 
 # Reference :
 
