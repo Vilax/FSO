@@ -4,11 +4,6 @@ The Fourier Shell Occupancy (FSO) algorithm measures the Global resolution aniso
 
 For a detailed information about the algorithm see our [article](https://doi.org/10.1038/s41592-023-01874-3). 
 
-#Important (May 29 2023): 
-
-The stand alone version does not provides visualization of the polar plot. It will be available in the comming days
-The polar plot only can be visualized in Scipion version. 
-
 # How to use it
 
 There are two independent ways of using this algorithm:
