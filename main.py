@@ -26,16 +26,19 @@ parser.add_argument('-threshold', '--threshold', type=float, required=False, def
 
 
 def main():
+    try:
+        args = parser.parse_args()
+  
+        #halfMap1 = mrcfile.open(args.halfmap1, mode='r')
+        #halfMap2 = mrcfile.open(args.halfmap2, mode='r')
 
-    args = parser.parse_args()
+        #halfMap1Data = np.copy(halfMap1.data)
+        #halfMap2Data = np.copy(halfMap2.data)
 
-    #halfMap1 = mrcfile.open(args.halfmap1, mode='r')
-    #halfMap2 = mrcfile.open(args.halfmap2, mode='r')
+        est.run(args.half1, args.half2, args.mask, args.sampling, args.anglecone, args.threshold)
+    except Exception as e:
+        print(f"¡Ocurrió un error inesperado durante la ejecución de est.run(): {e}")
 
-    #halfMap1Data = np.copy(halfMap1.data)
-    #halfMap2Data = np.copy(halfMap2.data)
-
-    est.run(args.half1, args.half2, args.mask, args.sampling, args.anglecone, args.threshold)
 
 
 

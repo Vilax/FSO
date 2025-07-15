@@ -218,7 +218,7 @@ def incompleteGammaFunction(x):
 
 
 def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
-
+    print('starting')
     half1, half2, mask = prepareData(fnHalf1, fnHalf2, fnMask)
 
     FT1 = np.fft.fftn(half1)
@@ -233,7 +233,7 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     freqMap = freqMap[candidates]
 
     idxFreq = idxFreq[candidates]
-
+    print('Global FSC')
     num, den1, den2, fscglob, resolutions = arrangeFSC_and_fscGlobal(FT1_vec, FT2_vec, idxFreq, mapSize, sampling, threshold)
 
     angles = directions.loadDirections()
@@ -246,6 +246,7 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     alldirfsc = np.zeros((Ndirections[0], round(mapSize / 2)))
     freqMat = [np.zeros([3, 3]) for _ in range(round(mapSize / 2))]
     dirRes = np.zeros(Ndirections[0])
+    print('Directional FSC')
     for dir in range(0, Ndirections[0]):
         counter = counter + 1
         alldirfsc[dir, :], freqMat, dirRes[dir] = dirFSC(angles[dir], ang_con, idxFreq, num, den1, den2, freqMap, fx, fy, fz,
@@ -261,9 +262,9 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     fso = np.divide(NdirFSCgreaterThreshold, Ndirections[0])
     fso[0] = 1
     fso[1] = 1
-
+    print('binghan Curve')
     binghanCurve = binghamTest(NdirFSCgreaterThreshold, freqMat, round(mapSize / 2))
-
+    print('plot FSO')
     plotFSO(np.divide(sampling, resolutions)/sampling, fso, binghanCurve, 'Resolution ($A^{-1}$)', 'FSO (a.u)',
             'FSO and Bingham curves', sampling)
 
@@ -359,6 +360,7 @@ def plotFSO(x, y1, yyBingham, xlabel, ylabel, title, sampling):
         props = dict(boxstyle='round', facecolor='white')
         plt.text(0.0, 0.0, textstr, fontsize=12, ha="left", va="bottom", bbox=props)
     plt.grid(True)
+    plt.show()
 
 
 def resolutionDistribution(resDirFSC, ang_con, anglesDir, sampling):
