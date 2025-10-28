@@ -150,6 +150,11 @@ class Ui(QtWidgets.QMainWindow):
     #     proc.wait()
     
     def executeButton(self):
+        # Check if the value in the text box is consistent with the current resultsPath, update if not
+        new_results_path = self.linePathDir.text() + "/results/"
+        if self.resultsPath != new_results_path:
+            self.resultsPath = new_results_path
+        
         xmippCmdline, params = self.createScript()
         
         if not os.path.exists(self.resultsPath):

@@ -35,7 +35,7 @@ def main():
         #halfMap1Data = np.copy(halfMap1.data)
         #halfMap2Data = np.copy(halfMap2.data)
 
-        est.run(args.half1, args.half2, args.mask, args.sampling, args.anglecone, args.threshold)
+        est.run(args.half1, args.half2, args.mask, args.sampling, args.anglecone, args.threshold, args.output)
     except Exception as e:
         print(f"¡Ocurrió un error inesperado durante la ejecución de est.run(): {e}")
 

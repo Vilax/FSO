@@ -36,7 +36,7 @@ def defineFrequencies(mapSize):
     return freqMap, candidates, fx[candidates], fy[candidates], fz[candidates]
 
 
-def arrangeFSC_and_fscGlobal(FT1, FT2, idxFreq, mapSize, sampling, threshold):
+def arrangeFSC_and_fscGlobal(FT1, FT2, idxFreq, mapSize, sampling, threshold, output_dir=None):
     Nfreqs = round(mapSize / 2)
     num = np.real(np.multiply(FT1, np.conjugate(FT2)))
 
@@ -74,6 +74,11 @@ def arrangeFSC_and_fscGlobal(FT1, FT2, idxFreq, mapSize, sampling, threshold):
     hthresholds = [threshold]
     plt.hlines(hthresholds, digFreq[0], digFreq[-1], colors='k', linestyles='dashed')
     plt.grid(True)
+
+    if output_dir is not None:
+        os.makedirs(output_dir, exist_ok=True)
+        fig.savefig(os.path.join(output_dir, 'fsc_curve.png'), dpi=300, bbox_inches='tight')
+        fig.savefig(os.path.join(output_dir, 'fsc_curve.pdf'), bbox_inches='tight')
 
     return num, den1, den2, fscglob, resolutions
 
@@ -217,7 +222,7 @@ def incompleteGammaFunction(x):
     return val
 
 
-def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
+def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold, output_dir=None):
     print('starting')
     half1, half2, mask = prepareData(fnHalf1, fnHalf2, fnMask)
 
@@ -234,7 +239,7 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
 
     idxFreq = idxFreq[candidates]
     print('Global FSC')
-    num, den1, den2, fscglob, resolutions = arrangeFSC_and_fscGlobal(FT1_vec, FT2_vec, idxFreq, mapSize, sampling, threshold)
+    num, den1, den2, fscglob, resolutions = arrangeFSC_and_fscGlobal(FT1_vec, FT2_vec, idxFreq, mapSize, sampling, threshold, output_dir)
 
     angles = directions.loadDirections()
 
@@ -266,7 +271,7 @@ def run(fnHalf1, fnHalf2, fnMask, sampling, anglecone, threshold):
     binghanCurve = binghamTest(NdirFSCgreaterThreshold, freqMat, round(mapSize / 2))
     print('plot FSO')
     plotFSO(np.divide(sampling, resolutions)/sampling, fso, binghanCurve, 'Resolution ($A^{-1}$)', 'FSO (a.u)',
-            'FSO and Bingham curves', sampling)
+            'FSO and Bingham curves', sampling, output_dir)
 
     #resolutionDistribution(dirRes, ang_con, angles, sampling)
 
@@ -329,7 +334,7 @@ def interpolRes(thr, x, y):
     return resInterp, okToPlot
 
 
-def plotFSO(x, y1, yyBingham, xlabel, ylabel, title, sampling):
+def plotFSO(x, y1, yyBingham, xlabel, ylabel, title, sampling, output_dir=None):
     fig, ax = plt.subplots()
 
     from matplotlib.ticker import FuncFormatter
@@ -360,6 +365,18 @@ def plotFSO(x, y1, yyBingham, xlabel, ylabel, title, sampling):
         props = dict(boxstyle='round', facecolor='white')
         plt.text(0.0, 0.0, textstr, fontsize=12, ha="left", va="bottom", bbox=props)
     plt.grid(True)
+    
+    if output_dir is not None:
+        os.makedirs(output_dir, exist_ok=True)
+        fig.savefig(os.path.join(output_dir, 'fso_curve.png'), dpi=300, bbox_inches='tight')
+        fig.savefig(os.path.join(output_dir, 'fso_curve.pdf'), bbox_inches='tight')
+        fso_data_path = os.path.join(output_dir, 'fso_data.txt')
+        with open(fso_data_path, 'w') as f:
+            f.write(f'# sampling={sampling}\n')
+            np.savetxt(f, 
+                       np.column_stack([x, y1, yyBingham]), 
+                       header='x, y1, yyBingham', fmt='%.6f')
+    
     plt.show()
 
 
